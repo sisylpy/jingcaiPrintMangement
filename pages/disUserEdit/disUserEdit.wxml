@@ -1,0 +1,59 @@
+<view class="flex flex-column h-100">
+
+
+  <view class="flex-column p-30 font-xl bg-white">
+  
+    <!-- 管理员头像 -->
+    <view class="flex-column p-20 border-bottom mb-20">
+      <view class="text-secondary mb-10">管理员头像:</view>
+      <image class='class_img' src='{{src}}' bindtap='choiceImg'></image>
+      <text class="text-tertiary font-sm mt-10">点击头像更换</text>
+    </view>
+
+    <!-- 管理员姓名 -->
+    <view class="p-20 flex-column">
+      <text class="text-secondary mb-20">管理员姓名:</text>
+      <input class="group_input font-lg p-10" value="{{managerName}}" bindinput="getManagerName" placeholder="请输入管理员姓名"> </input>
+    </view>
+
+    <!-- 手机号码 -->
+    <view class="p-20 flex-column">
+      <text class="text-secondary mb-20">手机号码:</text>
+      <input class="group_input font-lg p-10" type="number" value="{{phone}}" bindinput="getPhone" bindblur="validatePhone" placeholder="请输入手机号码"> </input>
+    </view>
+
+    <!-- 角色信息 -->
+    <view class="p-20 flex-column">
+      <text class="text-secondary mb-20">角色类型:</text>
+      <!-- 市场主管编辑其他用户时显示可编辑的角色选择 -->
+      <radio-group wx:if="{{currentUserRole === 2 && isEditingOtherUser}}" bindchange="onRoleChange">
+        <label class="radio-item">
+          <radio value="1" checked="{{managerInfo.role === 1}}"/>
+          <text class="font-sm text-primary">普通管理员</text>
+        </label>
+        <label class="radio-item">
+          <radio value="2" checked="{{managerInfo.role === 2}}"/>
+          <text class="font-sm text-primary">市场主管</text>
+        </label>
+      </radio-group>
+      <!-- 其他情况显示只读 -->
+      <view wx:else class="group_input font-lg p-10 text-tertiary">
+        {{managerInfo.role === 2 ? '市场主管' : '普通管理员'}}
+      </view>
+    </view>
+
+    <!-- 市场信息（只读） -->
+    <view class="p-20 flex-column">
+      <text class="text-secondary mb-20">所属市场:</text>
+      <view class="group_input font-lg p-10 text-tertiary">
+        {{managerInfo.marketName || '未知市场'}}
+      </view>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view class="center-content mt-10 mb-20">
+      <view class="saveBtn {{canSave ? 'is-active' : ''}}" bindtap="{{canSave ? 'save' : ''}}">保存修改</view>
+    </view>
+
+  </view>
+</view>

@@ -1,0 +1,201 @@
+/* pages/distributer-management/distributer-management.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 搜索区域 */
+.search-section {
+  background-color: #fff;
+  padding: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background-color: #f5f5f5;
+  border-radius: 25rpx;
+  padding: 15rpx 20rpx;
+}
+
+.search-icon {
+  font-size: 28rpx;
+  color: #999;
+  margin-right: 15rpx;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+
+/* 统计区域 */
+.stats-section {
+  display: flex;
+  gap: 15rpx;
+  padding: 0 20rpx 20rpx;
+}
+
+.stats-card {
+  flex: 1;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12rpx;
+  padding: 25rpx 20rpx;
+  text-align: center;
+  color: #fff;
+}
+
+.stats-number {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 8rpx;
+}
+
+.stats-label {
+  font-size: 22rpx;
+  opacity: 0.9;
+}
+
+/* 配送商列表 */
+.distributer-list {
+  padding: 0 20rpx 20rpx;
+}
+
+.distributer-card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  padding: 25rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #f0f0f0;
+}
+
+.distributer-card:active {
+  background-color: #fafafa;
+}
+
+/* 配送商头部 */
+.distributer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20rpx;
+}
+
+.distributer-info {
+  flex: 1;
+}
+
+.distributer-name {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.distributer-type {
+  font-size: 22rpx;
+  color: #1890ff;
+  background-color: #e6f7ff;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  display: inline-block;
+}
+
+.distributer-id {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 配送商详情 */
+.distributer-details {
+  margin-bottom: 20rpx;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 12rpx;
+  font-size: 26rpx;
+}
+
+.detail-row:last-child {
+  margin-bottom: 0;
+}
+
+.detail-label {
+  color: #999;
+  min-width: 120rpx;
+  margin-right: 15rpx;
+}
+
+.detail-value {
+  flex: 1;
+  color: #333;
+  word-break: break-all;
+}
+
+.phone-link {
+  color: #1890ff;
+  text-decoration: underline;
+}
+
+/* 操作按钮 */
+.distributer-actions {
+  display: flex;
+  gap: 15rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.action-btn {
+  flex: 1;
+  text-align: center;
+  padding: 15rpx 0;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+}
+
+.action-btn.primary {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.action-btn.secondary {
+  background-color: #f5f5f5;
+  color: #666;
+  border: 1rpx solid #d9d9d9;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 0;
+}
+
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+}
+
+.empty-tip {
+  font-size: 24rpx;
+  color: #ccc;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+  font-size: 28rpx;
+  color: #999;
+}

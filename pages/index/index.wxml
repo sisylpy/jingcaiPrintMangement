@@ -1,0 +1,89 @@
+<!--pages/index/index.wxml-->
+<wxs module="fn" src="../../utils/fn.wxs"></wxs>
+<!-- 使用组件导航栏 -->
+<main-navbar 
+  title="自助打印设备管理" 
+  avatar="{{userAvatar}}"
+  bind:navbuttontap="goToSettings"
+  bind:searchinput="onSearchInput"
+  bind:searchcancel="onSearchCancel"
+  bind:sortby="onSortBy"
+/>
+
+<!-- 内容区域 -->
+<view class="page-content p-20" style="padding-top: {{pageContentPaddingTop}}">
+  
+  <!-- 登录失败状态 -->
+  <view wx:if="{{loginFailed}}" class="login-failed-container">
+    <view class="login-failed-content">
+      <text class="login-failed-icon">⚠️</text>
+      <text class="login-failed-title">登录失败</text>
+      <text class="login-failed-msg">{{loginErrorMsg}}</text>
+      
+      <view class="login-failed-buttons">
+        <!-- 未注册用户：显示注册按钮 -->
+        <button wx:if="{{loginErrorType === 'not_registered'}}" class="btn-register" bindtap="goToRegister">去注册</button>
+        
+        <!-- 待审核用户：只显示重新登录按钮 -->
+        <button wx:if="{{loginErrorType === 'pending_approval'}}" class="btn-retry" bindtap="retryLogin">重新登录</button>
+        
+        <!-- 已禁用用户：只显示重新登录按钮 -->
+        <button wx:if="{{loginErrorType === 'disabled'}}" class="btn-retry" bindtap="retryLogin">重新登录</button>
+        
+        <!-- 其他错误：显示注册和重新登录按钮 -->
+        <button wx:if="{{loginErrorType === 'other'}}" class="btn-register" bindtap="goToRegister">去注册</button>
+        <button wx:if="{{loginErrorType === 'other'}}" class="btn-retry" bindtap="retryLogin">重新登录</button>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 设备列表 -->
+  <view wx:elif="{{deviceList.length > 0}}">
+    <view class="card p-20 mt-10 mb-10" wx:for="{{deviceList}}" wx:key="nxPdId" bindtap="goToRefill" data-item="{{item}}">
+      <!-- 设备头部信息 -->
+      <view class="flex-row-between mb-20">
+        <text class="font-lg font-bold text-primary">{{item.nxPdDeviceName || '未命名设备'}}</text>
+        <view class="status-tag {{getStatusClass(item.nxPdStatus)}} p-10 radius-20 font-xs text-white">
+          {{getStatusText(item.nxPdStatus)}}
+        </view>
+      </view>
+      
+      <!-- 设备基本信息 -->
+      <view class="mb-20">
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 100rpx;">位置：</text>
+          <text class="font-sm text-secondary flex-1">{{item.nxPdLocation || '未设置'}}</text>
+        </view>
+        <view class="flex-row">
+          <text class="font-sm text-tertiary" style="min-width: 100rpx;">纸张类型：</text>
+          <text class="font-sm text-secondary flex-1">{{fn.getPaperTypeText(item.nxPdPaperType)}}</text>
+        </view>
+      </view>
+
+      <!-- 纸张状态 -->
+      <view class="bg-light p-20 radius-10">
+        <text class="font-xs text-tertiary mb-10">纸张余量</text>
+        <view class="flex-row align-center mb-15">
+          <text class="big font-bold {{getPaperCountClass(item.nxPdPaperCount, item.nxPdPaperMax)}}"> {{item.nxPdPaperCount}}</text>
+          <text class="font-sm text-tertiary ml-10">/ {{item.nxPdPaperMax}} 张</text>
+        </view>
+        <view class="paper-bar">
+          <view class="paper-bar-fill {{getPaperCountClass(item.nxPdPaperCount, item.nxPdPaperMax)}}" 
+                style="width: {{(item.nxPdPaperCount / item.nxPdPaperMax * 100)}}%"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="flex-column-center" style="padding: 100rpx 0;">
+    <text class="font-xl mb-20">📭</text>
+    <text class="font-sm text-tertiary">暂无设备</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center" style="padding: 50rpx 0;">
+    <text class="font-sm text-tertiary">加载中...</text>
+  </view>
+</view>
+

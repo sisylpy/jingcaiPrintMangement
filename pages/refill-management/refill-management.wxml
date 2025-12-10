@@ -1,0 +1,117 @@
+<!--pages/refill-management/refill-management.wxml-->
+<wxs module="tool" src="../../utils/fn.wxs"></wxs>
+<view class="container">
+  
+
+
+  <!-- 时间选择 -->
+  <view class="flex-row-between pr-10 pl-10 border-bottom-shadow bg-white">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePage">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+      <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class="flex-row p-20" bindtap="refreshData">
+      <image src="/images/avatar.png" class="icon mr-20"></image>
+    </view> -->
+  </view>
+
+
+  
+  <!-- 汇总统计卡片 -->
+  <view class="summary-card">
+    <view class="summary-title">换纸统计汇总</view>
+    <view class="summary-grid">
+      <view class="summary-item">
+        <view class="summary-number">{{summary.totalRefill || 0}}</view>
+        <view class="summary-label">总加纸量</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.totalWaste || 0}}</view>
+        <view class="summary-label">总作废量</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.refillWaste || 0}}</view>
+        <view class="summary-label">更换作废</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.calibrateWaste || 0}}</view>
+        <view class="summary-label">校准作废</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 设备列表 -->
+  <view wx:if="{{deviceList.length > 0}}">
+    <view class="device-card" wx:for="{{deviceList}}" wx:key="deviceId" bindtap="onDeviceTap" data-device="{{item}}">
+      
+      <!-- 设备头部 -->
+      <view class="device-header">
+        <text class="device-name">{{item.deviceName || item.nxPdDeviceName || '设备'}}</text>
+        <view class="device-status">
+          <text class="paper-count">{{item.currentPaperCount || item.nxPdPaperCount || 0}}张</text>
+        </view>
+      </view>
+
+      <!-- 设备信息 -->
+      <view class="device-info">
+        <view class="info-row">
+          <text class="info-label">设备编号：</text>
+          <text class="info-value">{{item.deviceNo || item.nxPdDeviceNo || '未设置'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">纸张类型：</text>
+          <text class="info-value">{{item.paperTypeName || '整张'}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">换纸次数：</text>
+          <text class="info-value">{{item.refillCount || 0}}次</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">加纸总数：</text>
+          <text class="info-value">{{item.totalRefill || 0}}张</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">总作废数：</text>
+          <text class="info-value">{{item.totalWaste || 0}}张</text>
+        </view>
+      </view>
+
+      <!-- 设备底部 -->
+      <view class="device-footer">
+        <text class="last-refill-time">最后换纸：{{item.lastRefillTime || '暂无记录'}}</text>
+        <text class="tap-hint">点击查看详情 →</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 无数据状态 -->
+  <view wx:if="{{!loading && deviceList.length === 0}}" class="no-data">
+    <view class="no-data-icon">🖨️</view>
+    <text>暂无换纸设备</text>
+  </view>
+
+  <!-- 分页加载 -->
+  <view wx:if="{{hasMore && deviceList.length > 0}}" class="load-more">
+    <text>上拉加载更多</text>
+  </view>
+
+</view>

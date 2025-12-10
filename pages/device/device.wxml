@@ -1,0 +1,82 @@
+<!--pages/device/device.wxml-->
+<view class="container p-20">
+  <view wx:if="{{device}}">
+    <!-- 设备基本信息 -->
+    <view class="card p-30 mb-20 ">
+      <!-- <view class="flex-row-between align-center mb-20">
+        <text class="font-lg font-bold text-primary">设备信息</text>
+        <button class="btn-edit" size="mini" bindtap="editDevice">编辑</button>
+      </view> -->
+      <view class="device-info">
+        <view class="flex-row mb-20">
+          <text class="font-sm text-tertiary" style="min-width: 160rpx;">设备名称：</text>
+          <text class="font-sm text-primary flex-1">{{device.nxPdDeviceName}}</text>
+        </view>
+        <view class="flex-row mb-20">
+          <text class="font-sm text-tertiary" style="min-width: 160rpx;">设备编号：</text>
+          <text class="font-sm text-primary flex-1">{{device.nxPdDeviceNo}}</text>
+        </view>
+        <view class="flex-row mb-20">
+          <text class="font-sm text-tertiary" style="min-width: 160rpx;">纸张类型：</text>
+          <text class="font-sm text-primary flex-1">{{device.nxPdPaperType === 1 ? '整张' : device.nxPdPaperType === 2 ? '半张' : device.nxPdPaperType === 3 ? '三分之一张' : '未知'}}</text>
+        </view>
+        <view class="flex-row mb-20">
+          <text class="font-sm text-tertiary" style="min-width: 160rpx;">设备位置：</text>
+          <text class="font-sm text-primary flex-1">{{device.nxPdLocation}}</text>
+        </view>
+        <view class="flex-row">
+          <text class="font-sm text-tertiary" style="min-width: 160rpx;">打印单价：</text>
+          <text class="font-sm text-primary flex-1">{{device.nxPdPrintPrice || 0.00}} 元/张</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 纸张余量 -->
+    <view class="card paper-card p-30 mb-20 ">
+      <view class="flex-row-between mb-30">
+        <text class="font-lg font-bold text-white" style="opacity: 0.9;">纸张余量</text>
+        <view class="paper-count-large">
+          {{device.nxPdPaperCount}}
+          <text class="font-md text-white ml-10" style="opacity: 0.8;">张</text>
+        </view>
+      </view>
+      <view class="flex-row align-center mb-20">
+        <view class="paper-bar flex-1">
+          <view class="paper-bar-fill {{getPaperCountClass(device.nxPdPaperCount, device.nxPdPaperMax)}}" 
+                style="width: {{(device.nxPdPaperCount / device.nxPdPaperMax * 100)}}%"></view>
+        </view>
+      </view>
+      <text class="font-xs text-white" style="opacity: 0.8;">容量：{{device.nxPdPaperMax}} 张</text>
+    </view>
+
+    <!-- 阈值配置 -->
+    <view class="card p-30 mb-20 ">
+      <view class="flex-row-between align-center mb-20">
+        <text class="font-lg font-bold text-primary">提醒阈值</text>
+        <button class="btn-set-threshold" size="mini" bindtap="goToThresholdSetting">设置</button>
+      </view>
+      <view class="threshold-list">
+        <view class="flex-row align-center p-20 bg-light radius-10 mb-15" wx:for="{{device.alertThresholds}}" wx:key="nxAtId">
+          <view class="threshold-level {{getThresholdLevelClass(item.nxAtLevel)}} radius-5 p-10 font-xs text-white text-center" style="width: 80rpx; height: 50rpx; line-height: 30rpx; margin-right: 20rpx;">
+            {{getThresholdLevelText(item.nxAtLevel)}}
+          </view>
+          <text class="font-sm text-primary font-bold" style="min-width: 150rpx;">&lt; {{item.nxAtThreshold}} 张</text>
+          <text class="font-sm text-secondary flex-1">{{item.nxAtMessage}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="p-30 ">
+      <button class="btn btn-primary width-100 mb-20 p-20" bindtap="goToRefill">加纸</button>
+      <button class="btn btn-secondary width-100 mb-20 p-20" bindtap="goToHistory">加纸历史</button>
+      <button class="btn btn-manager width-100 p-20" bindtap="goToDeviceManager">责任人管理</button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center" style="padding: 50rpx 0;">
+    <text class="font-sm text-tertiary">加载中...</text>
+  </view>
+</view>
+

@@ -1,0 +1,138 @@
+/* pages/index/index.wxss */
+
+/* 页面内容区域样式 */
+.page-content {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 纸张进度条样式 */
+.paper-bar {
+  height: 16rpx;
+  background-color: #e0e0e0;
+  border-radius: 8rpx;
+  overflow: hidden;
+}
+
+.paper-bar-fill {
+  height: 100%;
+  background-color: #52c41a; /* 默认绿色 */
+  transition: width 0.3s;
+}
+
+/* 纸张数量状态颜色 */
+.paper-bar-fill.status-normal {
+  background-color: #52c41a;
+}
+
+.paper-bar-fill.status-warning {
+  background-color: #faad14;
+}
+
+.paper-bar-fill.status-danger {
+  background-color: #ff4d4f;
+}
+
+/* 数字颜色 */
+.big.status-normal {
+  color: #52c41a;
+}
+
+.big.status-warning {
+  color: #faad14;
+}
+
+.big.status-danger {
+  color: #ff4d4f;
+}
+
+/* 设备状态标签颜色 */
+.status-tag.status-normal {
+  background-color: #52c41a;
+}
+
+.status-tag.status-warning {
+  background-color: #faad14;
+}
+
+.status-tag.status-danger {
+  background-color: #ff4d4f;
+}
+
+.status-tag.status-offline {
+  background-color: #9b9b9b;
+}
+
+/* 登录失败状态样式 */
+.login-failed-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* 淡灰色蒙板 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 0 40rpx; /* 容器左右留白 20px (40rpx) */
+}
+
+.login-failed-content {
+  text-align: center;
+  background: white;
+  border-radius: 20rpx;
+  padding: 60rpx 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.1);
+  width: 100%; /* 占满容器宽度 */
+  max-width: 600rpx; /* 限制最大宽度 */
+}
+
+.login-failed-icon {
+  font-size: 80rpx;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.login-failed-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 20rpx;
+}
+
+.login-failed-msg {
+  font-size: 28rpx;
+  color: #666;
+  display: block;
+  margin-bottom: 40rpx;
+  line-height: 1.5;
+}
+
+.login-failed-buttons {
+  display: flex;
+  gap: 20rpx;
+  justify-content: center;
+}
+
+.btn-register {
+  background-color: #1890ff;
+  color: white;
+  border: none;
+  border-radius: 10rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  flex: 1;
+}
+
+.btn-retry {
+  background-color: #f0f0f0;
+  color: #333;
+  border: none;
+  border-radius: 10rpx;
+  padding: 20rpx 40rpx;
+  font-size: 28rpx;
+  flex: 1;
+}
+

@@ -1,0 +1,85 @@
+/* pages/device/device.wxss */
+
+/* 纸张卡片渐变背景 */
+.paper-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+/* 纸张数量大字体 */
+.paper-count-large {
+  font-size: 64rpx;
+  font-weight: bold;
+}
+
+/* 纸张进度条样式 */
+.paper-bar {
+  height: 20rpx;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 10rpx;
+  overflow: hidden;
+}
+
+.paper-bar-fill {
+  height: 100%;
+  background-color: #fff;
+  transition: width 0.3s;
+}
+
+/* 纸张数量状态颜色 */
+.paper-bar-fill.status-normal {
+  background-color: #52c41a;
+}
+
+.paper-bar-fill.status-warning {
+  background-color: #faad14;
+}
+
+.paper-bar-fill.status-danger {
+  background-color: #ff4d4f;
+}
+
+/* 阈值等级颜色 */
+.threshold-level.level-low {
+  background-color: #52c41a;
+}
+
+.threshold-level.level-medium {
+  background-color: #faad14;
+}
+
+.threshold-level.level-high {
+  background-color: #ff4d4f;
+}
+
+.threshold-level.level-urgent {
+  background-color: #d32f2f;
+}
+
+/* 阈值设置按钮 */
+.btn-set-threshold {
+  background-color: #1aad19;
+  color: white;
+  border-radius: 8rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+/* 编辑按钮 */
+.btn-edit {
+  background-color: #1890ff;
+  color: white;
+  border-radius: 8rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+
+/* 责任人管理按钮 */
+.btn-manager {
+  background-color: #667eea;
+  color: white;
+  border-radius: 8rpx;
+  padding: 8rpx 16rpx;
+  font-size: 24rpx;
+}
+

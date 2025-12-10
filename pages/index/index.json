@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "main-navbar": "/components/main-navbar/main-navbar"
+  },
+  "navigationBarTitleText": "设备列表",
+  "enablePullDownRefresh": true,
+  "navigationStyle": "custom"
+}
+

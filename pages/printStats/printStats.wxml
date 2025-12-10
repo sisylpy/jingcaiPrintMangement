@@ -1,0 +1,86 @@
+<!--pages/printStats/printStats.wxml-->
+
+<wxs src="../../utils/fn.wxs" module="tool" />
+
+<view class="container">
+  <!-- 时间选择 -->
+  
+  <!--  top -->
+  <view class=" flex-row-between pr-10 pl-10 border-bottom-shadow bg-white">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePage">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+       <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class="flex-row p-20" bindtap="showSearch">
+  
+      <image src="/images/avatar.png" class="icon mr-20"></image>
+    </view> -->
+
+  </view>
+
+  <!-- 汇总数据卡片 -->
+  <view class="flex-row plr-20 mb-20 mt-20" style="gap: 15rpx;">
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">{{summary.printCount}}</view>
+      <view class="font-xs">打印单数</view>
+    </view>
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">{{summary.totalPaper}}</view>
+      <view class="font-xs">消耗纸张(张)</view>
+    </view>
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">¥{{summary.totalAmount}}</view>
+      <view class="font-xs">单据金额</view>
+    </view>
+  </view>
+
+  <!-- 每日统计 -->
+  <view class="flex-column">
+   
+    <view class="">
+      <view class="bg-white border-bottom p-20" wx:for="{{dailyStats}}" wx:key="print_date" bindtap="goToDailyRecords" data-date="{{item.print_date}}">
+        <text class="font-md font-bold text-primary mb-15">{{item.print_date}}</text>
+        <view class="flex-row" style="gap: 40rpx;">
+          <view class="font-sm text-secondary">
+            <text>打印: </text>
+            <text class="text-primary font-bold">{{item.print_count}}单</text>
+          </view>
+          <view class="font-sm text-secondary">
+            <text>纸张: </text>
+            <text class="text-primary font-bold">{{item.total_paper}}张</text>
+          </view>
+          <view class="font-sm text-secondary">
+            <text>金额: </text>
+            <text class="text-primary font-bold">¥{{item.total_amount}}</text>
+          </view>
+        </view>
+        <view class="text-right mt-10">
+          <text class="font-xs text-tertiary">点击查看详情 ›</text>
+        </view>
+      </view> 
+      
+      <view wx:if="{{dailyStats.length === 0}}" class="text-center p-60">
+        <text class="font-md text-secondary">暂无数据</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center p-40">
+    <text class="font-md text-secondary">加载中...</text>
+  </view>
+</view>
+

@@ -1,0 +1,73 @@
+<!--pages/history/history.wxml-->
+<view class="container">
+  <!-- 历史记录列表 -->
+ 
+  <!-- 记录列表 -->
+  <view wx:if="{{recordList.length > 0}}">
+    <view class="record-card" wx:for="{{recordList}}" wx:key="recordId">
+      
+      <!-- 记录头部 -->
+      <view class="record-header">
+        <text class="device-name">{{item.deviceName}}</text>
+        <view class="refill-type {{item.refillType === 1 ? 'refill-type-normal' : 'refill-type-calibrate'}}">
+          {{item.refillTypeName}}
+        </view>
+      </view>
+
+      <!-- 记录信息 -->
+      <view class="record-info">
+        <view class="info-row">
+          <text class="info-label">设备编号：</text>
+          <text class="info-value">{{item.deviceNo}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.refillType === 1}}">
+          <text class="info-label">加纸数量：</text>
+          <text class="info-value">{{item.addCount}}张</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">作废数量：</text>
+          <text class="info-value">{{item.wasteCount}}张</text>
+        </view>
+        <view class="info-row" >
+          <text class="info-label">纸张类型</text>
+          <block wx:if="{{item.paperType === 1}}">
+            <text class="info-value">整张</text>
+          </block>
+          <block wx:elif="{{item.paperType === 2}}">
+            <text class="info-value">半张</text>
+          </block>
+          <block wx:elif="{{item.paperType === 3}}">
+            <text class="info-value">三分之一张</text>
+          </block>
+        </view>
+       
+        <view class="info-row">
+          <text class="info-label">剩余数量：</text>
+          <text class="info-value">{{item.paperCount}}张</text>
+        </view>
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="info-label">备注：</text>
+          <text class="info-value">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <!-- 记录底部 -->
+      <view class="record-footer">
+        <text class="operator-info">操作人：{{item.operatorName}} ({{item.operatorPhone}})</text>
+        <text class="create-time">{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="flex-column-center" style="padding: 100rpx 0;">
+    <text class="font-xl mb-20">📝</text>
+    <text class="font-sm text-tertiary">暂无加纸记录</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center" style="padding: 50rpx 0;">
+    <text class="font-sm text-tertiary">加载中...</text>
+  </view>
+</view>
+

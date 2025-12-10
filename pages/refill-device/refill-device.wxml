@@ -1,0 +1,130 @@
+<!--pages/refill-device/refill-device.wxml-->
+<wxs module="tool" src="../../utils/fn.wxs"></wxs>
+<view class="container">
+  
+  <!-- 设备信息卡片 -->
+  <!-- <view class="device-info-card">
+    <view class="device-title">{{deviceName}}</view>
+    <view class="device-subtitle">设备编号：{{deviceNo}}</view>
+  </view> -->
+
+  <!-- 时间选择 -->
+  <view class="flex-row-between pr-10 pl-10 border-bottom-shadow bg-white">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePage">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+      <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+  
+  <!-- 汇总统计卡片 -->
+  <view class="summary-card">
+    <view class="summary-title">{{deviceName}} 换纸统计</view>
+    <view class="summary-grid">
+      <view class="summary-item">
+        <view class="summary-number">{{summary.totalRefill || 0}}</view>
+        <view class="summary-label">总加纸量</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.totalWaste || 0}}</view>
+        <view class="summary-label">总作废量</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.refillWaste || 0}}</view>
+        <view class="summary-label">更换作废</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.calibrateWaste || 0}}</view>
+        <view class="summary-label">校准作废</view>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 记录列表 -->
+  <view wx:if="{{recordList.length > 0}}">
+    <view class="record-card" wx:for="{{recordList}}" wx:key="recordId">
+      
+      <!-- 记录头部 -->
+      <view class="record-header">
+        <text class="device-name">{{item.deviceName}}</text>
+        <view class="refill-type {{item.refillType === 1 ? 'refill-type-normal' : 'refill-type-calibrate'}}">
+          {{item.refillTypeName}}
+        </view>
+      </view>
+
+      <!-- 记录信息 -->
+      <view class="record-info">
+        <view class="info-row">
+          <text class="info-label">设备编号：</text>
+          <text class="info-value">{{item.deviceNo}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.refillType === 1}}">
+          <text class="info-label">加纸数量：</text>
+          <text class="info-value">{{item.addCount}}张</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">作废数量：</text>
+          <text class="info-value">{{item.wasteCount}}张</text>
+        </view>
+        <view class="info-row" >
+          <text class="info-label">纸张类型</text>
+          <block wx:if="{{item.paperType === 1}}">
+            <text class="info-value">整张</text>
+          </block>
+          <block wx:elif="{{item.paperType === 2}}">
+            <text class="info-value">半张</text>
+          </block>
+          <block wx:elif="{{item.paperType === 3}}">
+            <text class="info-value">三分之一张</text>
+          </block>
+        </view>
+       
+        <view class="info-row">
+          <text class="info-label">剩余数量：</text>
+          <text class="info-value">{{item.paperCount}}张</text>
+        </view>
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="info-label">备注：</text>
+          <text class="info-value">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <!-- 记录底部 -->
+      <view class="record-footer">
+        <text class="operator-info">操作人：{{item.operatorName}} ({{item.operatorPhone}})</text>
+        <text class="create-time">{{item.createTime}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 无数据状态 -->
+  <view wx:if="{{!loading && recordList.length === 0}}" class="no-data">
+    <view class="no-data-icon">📄</view>
+    <text>暂无换纸记录</text>
+  </view>
+
+  <!-- 分页加载 -->
+  <view wx:if="{{hasMore && recordList.length > 0}}" class="load-more">
+    <text>上拉加载更多</text>
+  </view>
+
+</view>

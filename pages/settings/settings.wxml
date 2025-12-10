@@ -1,0 +1,144 @@
+<!--pages/settings/settings.wxml-->
+<view class="container p-20">
+  
+  <view class="flex-column-center pt-10 pb-10">
+    
+    <text class="font-lg font-bold">{{managerInfo.marketName}}</text>
+     <text class="text-secondary font-xs">自助打印管理</text>
+</view>
+  <!-- 功能菜单 -->
+  <view class="card p-30 mb-20">
+    <text class="font-lg font-bold text-primary mb-20">管理功能</text>
+    
+    <view class="menu-item" bindtap="goToDeviceManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon device-icon">📱</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">设备管理</text>
+          <text class="font-xs text-tertiary">添加、修改、删除设备</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToUserManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon user-icon">👥</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">人员管理</text>
+          <text class="font-xs text-tertiary">邀请同事、管理用户</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToPriceManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon price-icon">💰</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">价格管理</text>
+          <text class="font-xs text-tertiary">管理流量包和设备价格方案</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToDistributerManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon distributer-icon">📦</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">配送商户管理</text>
+          <text class="font-xs text-tertiary">查看和管理配送商信息</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="card p-30 mb-20">
+    <text class="font-lg font-bold text-primary mb-20">统计功能</text>
+    
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToDeviceStats">
+      <view class="flex-row align-center">
+        <view class="menu-icon stats-icon">📊</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">设备统计</text>
+          <text class="font-xs text-tertiary">查看打印使用情况统计</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToPrintStats">
+      <view class="flex-row align-center">
+        <view class="menu-icon records-icon">📋</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">打印统计</text>
+          <text class="font-xs text-tertiary">查看详细打印记录</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToRefillManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon refill-icon">📄</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">换纸管理</text>
+          <text class="font-xs text-tertiary">查看换纸记录和统计</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+    <view class="menu-divider"></view>
+
+    <view class="menu-item" bindtap="goToRechargeManagement">
+      <view class="flex-row align-center">
+        <view class="menu-icon recharge-icon">💰</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">充值管理</text>
+          <text class="font-xs text-tertiary">查看充值记录和统计</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+    </view>
+
+   
+  </view>
+
+  <!-- 其他设置 -->
+  <view class="card p-30">
+    <text class="font-lg font-bold text-primary mb-20">其他设置</text>
+    
+    <view class="menu-item" bindtap="goToAbout">
+      <view class="flex-row align-center">
+        <view class="menu-icon about-icon">ℹ️</view>
+        <view class="flex-1">
+          <text class="font-md text-primary">关于我们</text>
+          <text class="font-xs text-tertiary">版本信息</text>
+        </view>
+        <text class="font-sm text-tertiary">></text>
+      </view>
+
+     
+    </view>
+
+  
+  </view>
+</view>

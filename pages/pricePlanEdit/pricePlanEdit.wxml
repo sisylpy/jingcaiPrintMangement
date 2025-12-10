@@ -1,0 +1,160 @@
+<!--pages/pricePlanEdit/pricePlanEdit.wxml-->
+<view class="container">
+  <!-- 导航栏 -->
+
+  <!-- 页面内容 -->
+  <view class="content">
+    <view class="form-container">
+      
+      <!-- 方案类型 -->
+      <view class="form-group">
+        <text class="form-label">方案类型 <text class="required">*</text></text>
+        <picker mode="selector" range="{{typeOptions}}" value="{{formData.nxMppType}}" bindchange="onTypeChange">
+          <view class="picker-container">
+            <text class="picker-text">{{typeOptions[formData.nxMppType]}}</text>
+            <text class="picker-arrow">▼</text>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 方案名称 -->
+      <view class="form-group">
+        <text class="form-label">方案名称 <text class="text-secondary">(不显示)</text></text>
+        <input class="form-input" 
+               placeholder="请输入方案名称" 
+               value="{{formData.nxMppPlanName}}" 
+               bindinput="onPlanNameInput" 
+               maxlength="50" />
+      </view>
+
+      <block wx:if="{{formData.nxMppType === 0}}">
+         <!-- 数量规格 -->
+      <view class="form-group">
+        <text class="form-label">流量条数量 <text class="required">*(万条)</text></text>
+        <input class="form-input" 
+        type="digit" 
+               placeholder="如：输入10，就是 10万条" 
+               value="{{formData.nxMppQuantity}}" 
+               bindinput="onQuantityInput" 
+               maxlength="50" />
+      </view>
+
+      <!-- 方案价格 -->
+      <view class="form-group" >
+        <text class="form-label">方案价格 <text class="required">*(整数)</text></text>
+        <input class="form-input" 
+               type="digit" 
+               placeholder="请输入价格（元）" 
+               value="{{formData.nxMppPriceDisplay}}" 
+               bindinput="onPriceInput" />
+      </view>
+
+      <!-- 单价说明 -->
+      
+      <view class="form-group" >
+        <text class="form-label">平均每条单价<text class="required">*(可输入小数)</text></text>
+        <input class="form-input" 
+        type="digit" 
+               placeholder="如：输入1.2，则显示 1.2分/条" 
+               value="{{formData.nxMppUnitPrice}}" 
+               bindinput="onUnitPriceInput" 
+               maxlength="50" />
+      </view>
+
+
+      </block>
+
+     
+
+      <!-- 方案图片（仅设备方案显示） -->
+      <block wx:if="{{formData.nxMppType === 1}}">
+
+        <view class="form-group" >
+        <text class="form-label">设备名称<text class="required">*</text></text>
+        <input class="form-input" 
+               placeholder="如：输入1.2，则显示 1.2分/条" 
+               value="{{formData.nxMppUnitPrice}}" 
+               bindinput="onUnitPriceInput" 
+               maxlength="50" />
+      </view>
+
+        <view  class="form-group">
+        <text class="form-label">方案图片<text class="required">*</text></text>
+        <view class="image-upload-container">
+          <view wx:if="{{!formData.nxMppImageUrl}}" class="upload-placeholder" bindtap="chooseImage">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">点击上传图片</text>
+          </view>
+          <view wx:else class="image-preview" bindtap="chooseImage">
+            <image class="preview-image" src="{{formData.nxMppImageUrl}}" mode="aspectFill" />
+            <view class="image-overlay">
+              <text class="overlay-text">点击更换</text>
+            </view>
+          </view>
+        </view>
+      </view>
+ <!-- 方案价格 -->
+ <view class="form-group" >
+        <text class="form-label">方案价格 <text class="required">*(整数)</text></text>
+        <input class="form-input" 
+               type="digit" 
+               placeholder="请输入价格（元）" 
+               value="{{formData.nxMppPriceDisplay}}" 
+               bindinput="onPriceInput" />
+      </view>
+      <!-- 方案描述 -->
+      <view class="form-group" >
+        <text class="form-label">设备描述<text class="required">*</text></text>
+        <textarea class="form-textarea" 
+                  placeholder="请输入方案详细描述" 
+                  value="{{formData.nxMppDescription}}" 
+                  bindinput="onDescriptionInput" 
+                  maxlength="200" 
+                  auto-height />
+      </view>
+
+     
+
+      </block>
+     
+
+      <!-- 排序 -->
+      <view class="form-group">
+        <text class="form-label">排序</text>
+        <input class="form-input" 
+               type="number" 
+               placeholder="数字越小排序越靠前" 
+               value="{{formData.nxMppSortOrder}}" 
+               bindinput="onSortOrderInput" />
+      </view>
+
+      <!-- 状态 -->
+      <view class="form-group">
+        <text class="form-label">状态</text>
+        <radio-group bindchange="onStatusChange">
+          <view class="radio-container">
+            <label class="radio-item">
+              <radio value="1" checked="{{formData.nxMppStatus === 1}}" color="#1890ff" />
+              <text class="radio-text">启用</text>
+            </label>
+            <label class="radio-item">
+              <radio value="0" checked="{{formData.nxMppStatus === 0}}" color="#1890ff" />
+              <text class="radio-text">禁用</text>
+            </label>
+          </view>
+        </radio-group>
+      </view>
+
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="btn btn-cancel" bindtap="cancelEdit">取消</button>
+      <button class="btn btn-save {{canSave ? 'active' : 'disabled'}}" 
+              bindtap="savePlan" 
+              disabled="{{!canSave}}">
+        保存
+      </button>
+    </view>
+  </view>
+</view>

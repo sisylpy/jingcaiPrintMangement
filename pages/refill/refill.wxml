@@ -1,0 +1,79 @@
+<!--pages/refill/refill.wxml-->
+
+
+
+<view class="container ">
+
+ <!-- 自定义导航栏 -->
+ <back-navbar 
+    style="height: {{navBarHeight}}rpx;" 
+    title="{{deviceName}}" 
+    bind:navbuttontap="onNavButtonTap"
+  />
+  <view class="p-20" style="margin-top: {{navBarHeight + 20}}rpx;">
+    
+    <!-- 加纸类型选择 -->
+    <view class="mb-20 bg-white p-20">
+      <text class="font-sm font-bold text-primary mb-15">操作类型</text>
+      <radio-group class="flex-column" bindchange="onRefillTypeChange">
+        <label class="flex-row align-center p-20">
+          <radio value="1" checked="{{refillType === 1}}" class="mr-15"/>
+          <text class="font-sm text-primary">正常加纸/更换新纸</text>
+        </label>
+        <label class="flex-row align-center p-20">
+          <radio value="3" checked="{{refillType === 3}}" class="mr-15"/>
+          <text class="font-sm text-primary">手动校准</text>
+        </label>
+      </radio-group>
+    </view>
+
+    <!-- 正常加纸/更换新纸 -->
+    <view wx:if="{{refillType !== 3}}" class="mb-20 bg-white p-20">
+      <text class="font-sm font-bold text-primary mb-15">新纸数量（张）</text>
+      <input 
+        class="form-input bg-light p-20 radius-10 font-sm" 
+        type="number" 
+        placeholder="请输入新纸数量（直接设置，旧纸作废）" 
+        value="{{newPaperCount}}"
+        bindinput="onNewPaperCountInput"
+      />
+      <text class="font-xs text-warning mt-10">* 更换新纸时，旧纸剩余部分将作废</text>
+    </view>
+
+    <!-- 手动校准 -->
+    <view wx:else class="mb-20 bg-white p-20">
+      <text class="font-sm font-bold text-primary mb-15">校准数量（张）</text>
+      <input 
+        class="form-input bg-light p-20 radius-10 font-sm" 
+        type="number" 
+        placeholder="请输入校准后的纸张数量" 
+        value="{{calibrateCount}}"
+        bindinput="onCalibrateCountInput"
+      />
+      <text class="font-xs text-warning mt-10">* 手动校准只能减少数量，差值将作为校准作废</text>
+    </view>
+
+    <!-- 备注 -->
+    <view class="mb-20 bg-white p-20">
+      <text class="font-sm font-bold text-primary mb-15">备注（选填）</text>
+      <textarea 
+        class="form-textarea bg-light p-20 radius-10 font-sm" 
+        placeholder="请输入备注信息" 
+        value="{{remark}}"
+        bindinput="onRemarkInput"
+        maxlength="200"
+      />
+    </view>
+
+    <!-- 提交按钮 -->
+    <button 
+      class="btn btn-primary width-100 p-20" 
+      bindtap="submitRefill"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      确认提交
+    </button>
+  </view>
+</view>
+

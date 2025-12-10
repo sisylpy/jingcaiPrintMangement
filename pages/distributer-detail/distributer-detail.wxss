@@ -1,0 +1,123 @@
+/* pages/distributer-detail/distributer-detail.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #fff;
+  border-radius: 12rpx;
+  overflow: hidden;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  padding: 25rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  background-color: #fafafa;
+}
+
+.card-body {
+  padding: 30rpx;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  color: #999;
+  min-width: 150rpx;
+  margin-right: 20rpx;
+}
+
+.info-value {
+  flex: 1;
+  color: #333;
+  word-break: break-all;
+}
+
+.phone-link {
+  color: #1890ff;
+  text-decoration: underline;
+}
+
+.address-text {
+  line-height: 1.5;
+}
+
+/* 操作按钮区域 */
+.action-section {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 40rpx;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25rpx 0;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+}
+
+.action-btn.primary {
+  background-color: #1890ff;
+  color: #fff;
+}
+
+.action-btn.secondary {
+  background-color: #fff;
+  color: #666;
+  border: 1rpx solid #d9d9d9;
+}
+
+.btn-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+
+.btn-text {
+  font-weight: bold;
+}
+
+/* 加载状态 */
+.loading {
+  text-align: center;
+  padding: 200rpx 0;
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 错误状态 */
+.error-state {
+  text-align: center;
+  padding: 200rpx 0;
+}
+
+.error-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+
+.error-text {
+  font-size: 32rpx;
+  color: #ff4d4f;
+  margin-bottom: 10rpx;
+}
+
+.error-tip {
+  font-size: 24rpx;
+  color: #999;
+}

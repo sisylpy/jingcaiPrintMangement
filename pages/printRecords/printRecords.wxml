@@ -1,0 +1,95 @@
+<!--pages/printRecords/printRecords.wxml-->
+
+<wxs src="../../utils/fn.wxs" module="tool" />
+
+
+<back-navbar style="height: {{navBarHeight}}rpx;" title="{{title}}" avatar="/images/back.png" button-text="设置" bindnavbuttontap="toBack"></back-navbar>
+
+  <!--  top -->
+  <view class=" flex-row-between pr-10 pl-10 border-bottom-shadow bg-white" style="margin-top: {{navBarHeight}}rpx;">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePageSearch">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+       <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class="flex-row p-20" bindtap="showSearch">
+      <image src="/images/avatar.png" class="icon mr-20"></image>
+    </view> -->
+
+  </view>
+
+<view class="container">
+ 
+  
+  <!-- 统计信息 -->
+  <view class="p-20">
+    <text class="font-md text-secondary">共 {{total}} 条打印记录</text>
+  </view>
+
+  <!-- 记录列表 -->
+  <view class="plr-20">
+    <view class="card p-20 mb-20" wx:for="{{recordList}}" wx:key="nxPrId">
+      
+      
+      <view class="record-body">
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">商户:</text>
+          <text class="font-sm text-primary">{{item.distributerName}}</text>
+        </view>
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">单据编号:</text>
+          <text class="font-sm text-primary">{{item.nx_pr_bill_trade_no || item.nx_pr_bill_id}}</text>
+        </view>
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">打印设备:</text>
+          <text class="font-sm text-primary">{{item.deviceName}}</text>
+        </view>
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">纸张类型:</text>
+          <text class="font-sm text-primary">{{tool.getPaperTypeText(item.nx_pr_paper_type)}}</text>
+        </view>
+        <view class="flex-row mb-10">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">消耗纸张:</text>
+          <text class="font-sm text-primary">{{item.nx_pr_paper_count}} 张</text>
+        </view>
+        <view class="flex-row mb-10" wx:if="{{item.nx_pr_bill_total}}">
+          <text class="font-sm text-tertiary" style="min-width: 150rpx;">单据金额:</text>
+          <text class="font-sm text-danger font-bold">¥{{item.nx_pr_bill_total}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view wx:if="{{recordList.length === 0 && !loading}}" class="card p-60 text-center">
+      <text class="font-xl mb-20">📋</text>
+      <text class="font-md text-secondary">暂无打印记录</text>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{loadingMore}}" class="text-center p-30">
+    <text class="font-sm text-secondary">加载中...</text>
+  </view>
+  
+  <view wx:if="{{!hasMore && recordList.length > 0}}" class="text-center p-30">
+    <text class="font-sm text-secondary">没有更多了</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center p-100">
+    <text class="font-md text-secondary">加载中...</text>
+  </view>
+</view>
+

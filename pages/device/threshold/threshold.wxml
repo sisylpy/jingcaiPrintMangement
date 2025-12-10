@@ -1,0 +1,81 @@
+<!--pages/threshold/threshold.wxml-->
+<view class="container">
+  <view wx:if="{{!loading}}">
+    <!-- 页面标题 -->
+    <view class="page-header">
+      <text class="header-title">设置提醒阈值</text>
+      <text class="header-subtitle">{{deviceName}}</text>
+    </view>
+
+    <!-- 说明提示 -->
+    <view class="tip-box">
+      <text class="tip-icon">💡</text>
+      <view class="tip-content">
+        <text class="tip-title">设置说明</text>
+        <text class="tip-text">• 阈值必须递减：低 > 中 > 高 > 紧急</text>
+        <text class="tip-text">• 当纸张余量低于阈值时会触发提醒</text>
+        <text class="tip-text">• 可以禁用不需要的提醒级别</text>
+      </view>
+    </view>
+
+    <!-- 阈值配置列表 -->
+    <view class="threshold-list">
+      <view class="threshold-card" wx:for="{{thresholds}}" wx:key="level">
+        <view class="card-header">
+          <view class="level-badge" style="background-color: {{item.color}};">
+            {{item.levelText}}
+          </view>
+          <switch 
+            class="enable-switch" 
+            checked="{{item.enable === 1}}" 
+            bindchange="onEnableChange"
+            data-index="{{index}}"
+            color="{{item.color}}"
+          />
+        </view>
+
+        <view class="threshold-input-wrapper">
+          <text class="input-label">纸张余量低于</text>
+          <input 
+            class="threshold-input" 
+            type="number" 
+            value="{{item.threshold}}"
+            bindinput="onThresholdInput"
+            data-index="{{index}}"
+            disabled="{{item.enable === 0}}"
+          />
+          <text class="input-unit">张</text>
+        </view>
+
+        <view class="message-text {{item.enable === 0 ? 'disabled' : ''}}">
+          {{item.message}}
+        </view>
+      </view>
+    </view>
+
+    <!-- 推荐值按钮 -->
+    <view class="recommend-box">
+      <button class="btn-recommend" bindtap="useRecommended">
+        使用推荐值
+      </button>
+    </view>
+
+    <!-- 保存按钮 -->
+    <view class="action-buttons">
+      <button 
+        class="btn-save" 
+        bindtap="saveThresholds"
+        loading="{{saving}}"
+        disabled="{{saving}}"
+      >
+        {{saving ? '保存中...' : '保存设置'}}
+      </button>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+</view>
+

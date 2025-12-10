@@ -1,0 +1,262 @@
+/* pages/pricePlanManagement/pricePlanManagement.wxss */
+.container {
+  height: 100vh;
+  background-color: #f5f5f5;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: 20rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 市场信息 */
+.market-info {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 16rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+  text-align: center;
+  color: white;
+}
+
+.market-name {
+  display: block;
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.market-subtitle {
+  display: block;
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+/* 类型指示器 */
+.type-indicator {
+  display: flex;
+  background: white;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+  border: 2rpx solid #f0f0f0;
+  overflow: hidden;
+  margin-bottom: 30rpx;
+}
+
+.indicator-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 80rpx;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  border-bottom: 4rpx solid transparent;
+}
+
+.indicator-item.active {
+  border-bottom-color: #667eea;
+}
+
+.indicator-text {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #999;
+  transition: color 0.3s ease;
+}
+
+.indicator-item.active .indicator-text {
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* 方案swiper */
+.plan-swiper {
+  flex: 1;
+  min-height: 400rpx;
+}
+.plan-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 8rpx;
+  margin-top: 10rpx;
+}
+
+.plan-swiper swiper-item {
+  height: 100%;
+  overflow-y: auto;
+  padding-bottom: 20rpx;
+}
+
+/* 操作按钮 */
+.action-bar {
+  margin-bottom: 30rpx;
+}
+
+.add-btn {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 40rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(79, 172, 254, 0.3);
+}
+
+.add-icon {
+  font-size: 36rpx;
+  margin-right: 10rpx;
+}
+
+/* 方案列表 */
+.plan-list {
+  margin-bottom: 30rpx;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 100rpx 40rpx;
+  background: white;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.empty-icon {
+  display: block;
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+  opacity: 0.5;
+}
+
+.empty-text {
+  display: block;
+  font-size: 32rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.empty-hint {
+  display: block;
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 方案卡片 */
+.plan-card {
+  background: white;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.plan-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+}
+
+.plan-status {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.plan-status.active {
+  background: #e8f5e8;
+  color: #52c41a;
+}
+
+.plan-status.inactive {
+  background: #fff2e8;
+  color: #fa8c16;
+}
+
+/* 方案详情 */
+.plan-details {
+  margin-bottom: 30rpx;
+}
+
+.detail-row {
+  display: flex;
+  margin-bottom: 12rpx;
+  align-items: flex-start;
+}
+
+.detail-label {
+  font-size: 28rpx;
+  color: #666;
+  width: 160rpx;
+  flex-shrink: 0;
+}
+
+.detail-value {
+  font-size: 28rpx;
+  color: #333;
+  flex: 1;
+  word-break: break-all;
+}
+
+.detail-value.price {
+  color: #ff6b35;
+  font-weight: bold;
+}
+
+/* 操作按钮 */
+.plan-actions {
+  display: flex;
+  gap: 20rpx;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 16rpx 32rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  border: none;
+  min-width: 120rpx;
+}
+
+.edit-btn {
+  background: #1890ff;
+  color: white;
+}
+
+.enable-btn {
+  background: #52c41a;
+  color: white;
+}
+
+.disable-btn {
+  background: #fa8c16;
+  color: white;
+}
+
+.delete-btn {
+  background: #ff4d4f;
+  color: white;
+}
+
+.action-btn:active {
+  opacity: 0.8;
+}

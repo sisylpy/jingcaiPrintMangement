@@ -1,0 +1,44 @@
+/* pages/messages/messages.wxss */
+
+/* 未读消息样式 */
+.card.unread {
+  background-color: #F0F9FF;
+  border-left: 6rpx solid #1aad19;
+}
+
+/* 等级标签颜色 */
+.level-tag.level-low {
+  background-color: #52c41a;
+}
+
+.level-tag.level-medium {
+  background-color: #faad14;
+}
+
+.level-tag.level-high {
+  background-color: #ff4d4f;
+}
+
+.level-tag.level-urgent {
+  background-color: #d32f2f;
+}
+
+/* 未读标识点 */
+.unread-dot {
+  width: 12rpx;
+  height: 12rpx;
+  background-color: #1aad19;
+  border-radius: 50%;
+}
+
+/* 加载更多按钮 */
+.btn-load-more {
+  background-color: #f5f5f5 !important;
+  color: #666 !important;
+  border: 1rpx solid #ddd !important;
+  border-radius: 20rpx !important;
+  font-size: 28rpx !important;
+  padding: 15rpx 40rpx !important;
+  margin: 0 !important;
+}
+

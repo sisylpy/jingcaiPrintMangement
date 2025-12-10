@@ -1,0 +1,61 @@
+<!--pages/messages/messages.wxml-->
+<view class="container p-20">
+  <!-- 消息列表 -->
+  <view wx:if="{{messageList.length > 0}}"  >
+    <view  
+      class="card p-20 mt-10 mb-10  {{item.nxArIsRead === 0 ? 'unread' : ''}}" 
+      wx:for="{{messageList}}" 
+      wx:key="nxArId"
+      bindtap="showMessageDetail"
+      data-item="{{item}}"
+      data-index="{{index}}"
+    >
+      <!-- 消息头部 -->
+      <view class="flex-row-between mb-20">
+        <view class="flex-row align-center flex-1">
+          <text class="font-md font-bold text-primary mr-15">{{item.nxPrinterDeviceEntity.nxPdDeviceName}}</text>
+          <view class="level-tag {{getLevelClass(item.nxArAlertLevel)}} p-10 radius-5 font-xs text-white">
+            {{item.nxArAlertLevel === 1 ? '低' : item.nxArAlertLevel === 2 ? '中' : item.nxArAlertLevel === 3 ? '高' : '紧急'}}
+          </view>
+        </view>
+        <text class="font-xs text-tertiary">{{formatTime(item.nxArCreateTime)}}</text>
+      </view>
+      
+      <!-- 消息内容 -->
+      <text class="font-sm text-secondary mb-20" style="line-height: 40rpx;">{{item.nxArMessage}}</text>
+      
+      <!-- 消息底部 -->
+      <view class="flex-row-between align-center">
+        <text class="font-xs text-tertiary">
+          当前余量：<text class="font-md font-bold text-danger">{{item.nxArPaperCount}}</text> 张
+        </text>
+        <view class="flex-row align-center">
+          <view wx:if="{{item.nxArIsRead === 0}}" class="unread-dot"></view>
+          <text wx:else class="font-xs text-tertiary">已读</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="flex-column-center" style="padding: 100rpx 0;">
+    <text class="font-xl mb-20">📭</text>
+    <text class="font-sm text-tertiary">暂无消息</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{hasMore && !loading}}" class="text-center" style="padding: 30rpx 0;">
+    <button class="btn-load-more" bindtap="loadMore">加载更多</button>
+  </view>
+  
+  <!-- 没有更多数据 -->
+  <view wx:if="{{!hasMore && messageList.length > 0}}" class="text-center" style="padding: 30rpx 0;">
+    <text class="font-xs text-tertiary">没有更多消息了</text>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center" style="padding: 50rpx 0;">
+    <text class="font-sm text-tertiary">加载中...</text>
+  </view>
+</view>
+

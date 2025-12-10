@@ -1,0 +1,123 @@
+<!--pages/printStats/printStats.wxml-->
+
+<wxs src="../../utils/fn.wxs" module="tool" />
+
+<view class="container">
+  <!-- 时间选择 -->
+  
+  <!--  top -->
+  <view class=" flex-row-between pr-10 pl-10 border-bottom-shadow bg-white">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePage">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+       <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- <view class="flex-row p-20" bindtap="showSearch">
+      <image src="/images/avatar.png" class="icon mr-20"></image>
+    </view> -->
+
+  </view>
+
+  <!-- 汇总数据卡片 -->
+  <view class="flex-row plr-20 mb-20 mt-20 " style="gap: 15rpx;">
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">{{summary.printCount}}</view>
+      <view class="font-xs">打印单数</view>
+    </view>
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">{{summary.totalPaper}}</view>
+      <view class="font-xs">消耗纸张(张)</view>
+    </view>
+    <view class="flex-1 card p-30 text-center" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: #fff;">
+      <view class="font-xl font-bold mb-10">¥{{summary.totalAmount}}</view>
+      <view class="font-xs">单据金额</view>
+    </view>
+  </view>
+
+  <!-- 设备统计 -->
+  <view class="">
+   
+    <view class="p-10">
+      <view 
+        class="device-card mb-20"
+        wx:for="{{deviceStats}}"
+        wx:key="device_id"
+        bindtap="goToDeviceDetail"
+        data-device-id="{{item.device_id}}"
+        data-device="{{item}}"
+      >
+        <!-- 设备头部信息 -->
+        <view class="device-header mb-15">
+          <view class="flex-row-between align-center">
+            <text class="font-md font-bold text-primary">{{item.device_name}}</text>
+            <view class="device-status {{tool.getStatusClass(item.device_status)}}">
+              {{tool.getStatusText(item.device_status)}}
+            </view>
+          </view>
+          <view class="device-location mt-8">
+            <text class="font-xs text-secondary">📍 {{item.device_location}} · {{item.device_no}}</text>
+          </view>
+        </view>
+
+        <!-- 统计数据 -->
+        <view class="stats-row mb-15">
+          <view class="stat-item">
+            <text class="stat-label">打印单数</text>
+            <text class="stat-value">{{item.print_count}}</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-label">消耗纸张</text>
+            <text class="stat-value">{{item.total_paper_used}}</text>
+          </view>
+          <view class="stat-item">
+            <text class="stat-label">日均打印</text>
+            <text class="stat-value">{{item.avg_daily_count}}</text>
+          </view>
+        </view>
+
+        <!-- 纸张状态 -->
+        <!-- <view class="bg-light p-20 radius-10 mb-15">
+          <text class="font-xs text-tertiary mb-10">纸张余量</text>
+          <view class="flex-row align-center mb-15">
+            <text class="big font-bold {{tool.getPaperStatus(item.current_paper_count, item.paper_max).level === 'danger' ? 'text-danger' : tool.getPaperStatus(item.current_paper_count, item.paper_max).level === 'warning' ? 'text-warning' : 'text-success'}}"> {{item.current_paper_count}}</text>
+            <text class="font-sm text-tertiary ml-10">/ {{item.paper_max}} 张</text>
+          </view>
+          <view class="paper-bar">
+            <view class="paper-bar-fill {{tool.getPaperStatus(item.current_paper_count, item.paper_max).level === 'danger' ? 'text-danger' : tool.getPaperStatus(item.current_paper_count, item.paper_max).level === 'warning' ? 'text-warning' : 'text-success'}}" 
+                  style="width: {{tool.getPaperPercentage(item.current_paper_count, item.paper_max)}}"></view>
+          </view>
+        </view> -->
+
+        <!-- 使用时间信息 -->
+        <!-- <view class="usage-info">
+          <text class="font-xs text-tertiary">
+            使用时间：{{tool.formatDateOnly(item.first_print_time)}} ~ {{tool.formatDateOnly(item.last_print_time)}} ({{item.active_days}}天)
+          </text>
+        </view> -->
+      </view>
+      
+      <view wx:if="{{deviceStats.length === 0}}" class="text-center p-60">
+        <text class="font-md text-secondary">暂无数据</text>
+      </view>
+    </view>
+  </view>
+
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="text-center p-40">
+    <text class="font-md text-secondary">加载中...</text>
+  </view>
+</view>
+

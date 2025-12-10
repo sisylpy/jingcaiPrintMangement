@@ -1,0 +1,172 @@
+<!--pages/pricePlanManagement/pricePlanManagement.wxml-->
+<view class="container">
+  <!-- 页面内容 -->
+  <view class="content">
+   
+
+   
+
+    <!-- 方案类型指示器 -->
+    <view class="type-indicator">
+      <view class="indicator-item {{currentType === 0 ? 'active' : ''}}" bindtap="switchType" data-type="0">
+        <text class="indicator-text">流量方案</text>
+      </view>
+      <view class="indicator-item {{currentType === 1 ? 'active' : ''}}" bindtap="switchType" data-type="1">
+        <text class="indicator-text">设备方案</text>
+      </view>
+    </view>
+
+    <!-- 方案列表 - 使用swiper -->
+    <swiper class="plan-swiper" current="{{currentType}}" bindchange="onSwiperChange" indicator-dots="{{false}}" duration="300">
+      <!-- 流量方案页面 -->
+      <swiper-item>
+        <!-- 流量方案操作按钮 -->
+        <view class="action-bar">
+          <button class="add-btn" bindtap="addPlan" data-type="0">
+            <text class="add-icon">+</text>
+            <text>新增流量方案</text>
+          </button>
+        </view>
+        
+        <view class="plan-list">
+          <view wx:if="{{planList.length === 0 && !loading}}" class="empty-state">
+            <text class="empty-icon">📋</text>
+            <text class="empty-text">暂无流量方案</text>
+            <text class="empty-hint">点击上方按钮添加新方案</text>
+          </view>
+
+          <view wx:for="{{planList}}" wx:key="nxMppId" class="plan-card">
+            <!-- 方案基本信息 -->
+            <view class="plan-header">
+              <view class="plan-title">{{item.nxMppPlanName}}</view>
+              <view class="plan-status {{item.nxMppStatus === 1 ? 'active' : 'inactive'}}">
+                {{item.nxMppStatus === 1 ? '启用' : '禁用'}}
+              </view>
+            </view>
+
+            <!-- 方案详情 -->
+            <view class="plan-details">
+              <view class="detail-row">
+                <text class="detail-label">数量规格：</text>
+                <text class="detail-value">{{item.nxMppQuantity}}</text>
+              </view>
+              <view class="detail-row">
+                <text class="detail-label">方案价格：</text>
+                <text class="detail-value price">¥{{item.nxMppPrice}}</text>
+              </view>
+              <view class="detail-row">
+                <text class="detail-label">单价说明：</text>
+                <text class="detail-value">{{item.nxMppUnitPrice}}</text>
+              </view>
+              <view wx:if="{{item.nxMppDescription}}" class="detail-row">
+                <text class="detail-label">方案描述：</text>
+                <text class="detail-value">{{item.nxMppDescription}}</text>
+              </view>
+            </view>
+
+            <!-- 操作按钮 -->
+            <view class="plan-actions">
+              <button class="action-btn edit-btn" bindtap="editPlan" data-id="{{item.nxMppId}}">
+                编辑
+              </button>
+              <button class="action-btn status-btn {{item.nxMppStatus === 1 ? 'disable-btn' : 'enable-btn'}}" 
+                      bindtap="toggleStatus" 
+                      data-id="{{item.nxMppId}}" 
+                      data-status="{{item.nxMppStatus}}">
+                {{item.nxMppStatus === 1 ? '禁用' : '启用'}}
+              </button>
+              <button class="action-btn delete-btn" bindtap="deletePlan" data-id="{{item.nxMppId}}" data-name="{{item.nxMppPlanName}}">
+                删除
+              </button>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+
+      <!-- 设备方案页面 -->
+      <swiper-item>
+        <!-- 设备方案操作按钮 -->
+        <view class="action-bar">
+          <button class="add-btn" bindtap="addPlan" data-type="1">
+            <text class="add-icon">+</text>
+            <text>新增设备方案</text>
+          </button>
+        </view>
+        
+        <view class="plan-list">
+          <view wx:if="{{devicePlanList.length === 0 && !loading}}" class="empty-state">
+            <text class="empty-icon">📋</text>
+            <text class="empty-text">暂无设备方案</text>
+            <text class="empty-hint">点击上方按钮添加新方案</text>
+          </view>
+
+          <view wx:for="{{devicePlanList}}" wx:key="nxMppId" class="plan-card">
+
+           <view class="flex-row-default">
+           <!-- 设备方案显示图片 -->
+           <view wx:if="{{item.nxMppImageUrl}}" class="detail-row image-row mr-20">
+                <image class="plan-image" src="{{url + item.nxMppImageUrl}}" mode="aspectFill" />
+              </view>
+
+              <view class="flex-column">
+              
+               <!-- 方案基本信息 -->
+            <view class="plan-header">
+              <view class="plan-title">{{item.nxMppPlanName}}</view>
+              <view class="plan-status {{item.nxMppStatus === 1 ? 'active' : 'inactive'}}">
+                {{item.nxMppStatus === 1 ? '启用' : '禁用'}}
+              </view>
+            </view>
+
+            <!-- 方案详情 -->
+            <view class="plan-details">
+              
+              
+              <view class="detail-row">
+                <text class="detail-label">设备名称：</text>
+                <text class="detail-value">{{item.nxMppUnitPrice}}</text>
+              </view>
+              <!-- <view class="detail-row">
+                <text class="detail-label">数量规格：</text>
+                <text class="detail-value">{{item.nxMppQuantity}}</text>
+              </view> -->
+              <view class="detail-row">
+                <text class="detail-label">方案价格：</text>
+                <text class="detail-value price">¥{{item.nxMppPrice}}</text>
+              </view>
+             
+              <view wx:if="{{item.nxMppDescription}}" class="detail-row">
+                <text class="detail-label">方案描述：</text>
+                <text class="detail-value">{{item.nxMppDescription}}</text>
+              </view>
+            </view>
+              
+              
+              
+              </view>
+           
+           
+           </view>
+           
+
+            <!-- 操作按钮 -->
+            <view class="plan-actions">
+              <button class="action-btn edit-btn" bindtap="editPlan" data-id="{{item.nxMppId}}">
+                编辑
+              </button>
+              <button class="action-btn status-btn {{item.nxMppStatus === 1 ? 'disable-btn' : 'enable-btn'}}" 
+                      bindtap="toggleStatus" 
+                      data-id="{{item.nxMppId}}" 
+                      data-status="{{item.nxMppStatus}}">
+                {{item.nxMppStatus === 1 ? '禁用' : '启用'}}
+              </button>
+              <button class="action-btn delete-btn" bindtap="deletePlan" data-id="{{item.nxMppId}}" data-name="{{item.nxMppPlanName}}">
+                删除
+              </button>
+            </view>
+          </view>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>

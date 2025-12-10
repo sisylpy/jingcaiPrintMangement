@@ -1,0 +1,101 @@
+<!--pages/recharge-management/recharge-management.wxml-->
+<wxs module="tool" src="../../utils/fn.wxs"></wxs>
+<view class="container">
+  
+  <!-- 时间选择 -->
+  <view class="flex-row-between pr-10 pl-10 border-bottom-shadow bg-white">
+    <view class="flex-row">
+      <view class="p-20" bindtap="toDatePage">
+        <image src="/images/calender.png" class="icon"></image>
+      </view>
+      
+      <view class="flex-column pt-10">
+        <view class="font-xs">{{hanzi}}</view>
+        <view class="flex-row" wx:if="{{startDate == stopDate}}">
+          <view class=" small" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+        </view>
+        <view class="flex-row" wx:else>
+          <view class="" wx:if="{{startDate}}"> {{tool.transferDateString(startDate)}}</view>
+          <text class="plr-10">-</text>
+          <view class="" wx:if="{{stopDate}}">{{tool.transferDateString(stopDate)}}</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <!-- 汇总统计卡片 -->
+  <view class="summary-card">
+    <view class="summary-title">充值统计汇总</view>
+    <view class="summary-grid">
+      <view class="summary-item">
+        <view class="summary-number">¥{{summary.totalAmount || 0}}</view>
+        <view class="summary-label">总充值金额</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.totalPoints || 0}}</view>
+        <view class="summary-label">总充值点数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.rechargeCount || 0}}</view>
+        <view class="summary-label">充值次数</view>
+      </view>
+      <view class="summary-item">
+        <view class="summary-number">{{summary.distributerCount || 0}}</view>
+        <view class="summary-label">配送商数量</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 记录列表 -->
+  <view wx:if="{{recordList.length > 0}}">
+    <view class="record-card" wx:for="{{recordList}}" wx:key="recordId">
+      
+    
+
+      <!-- 记录信息 -->
+      <view class="record-info">
+        <view class="info-row">
+          <text class="info-label">配送商：</text>
+          <text class="info-value">{{item.distributerName}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">充值点数：</text>
+          <text class="info-value">{{item.rechargePoints}}</text>
+        </view>
+        <view class="info-row">
+          <text class="info-label">支付金额：</text>
+          <view class="amount">¥{{item.payAmount}}</view>
+
+        </view>
+        <view class="info-row" wx:if="{{item.remark}}">
+          <text class="info-label">备注：</text>
+          <text class="info-value">{{item.remark}}</text>
+        </view>
+      </view>
+
+      <!-- 记录底部 -->
+      <view class="record-footer">
+        <text class="pay-time">{{item.payTime}}</text>
+        <text class="trade-no">{{item.tradeNo}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 无数据状态 -->
+  <view wx:if="{{!loading && recordList.length === 0}}" class="no-data">
+    <view class="no-data-icon">💰</view>
+    <text>暂无充值记录</text>
+  </view>
+
+  <!-- 分页加载 -->
+  <view wx:if="{{hasMore && recordList.length > 0}}" class="load-more">
+    <text>上拉加载更多</text>
+  </view>
+
+</view>

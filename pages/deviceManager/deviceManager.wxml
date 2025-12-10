@@ -1,0 +1,136 @@
+<!--pages/deviceManager/deviceManager.wxml-->
+<view class="container">
+  <!-- 顶部设备信息 -->
+  <view class="device-info">
+    <view class="device-name">{{deviceInfo.deviceName}}</view>
+    <view class="device-no">设备编号：{{deviceInfo.deviceNo}}</view>
+  </view>
+
+  <!-- 责任人列表 -->
+  <view class="manager-list">
+    <view class="section-title">
+      <text>责任人列表</text>
+      <text class="count">({{managerList.length}}人)</text>
+    </view>
+
+    <view class="manager-item" wx:for="{{managerList}}" wx:key="nx_dm_id">
+      <!-- 责任人信息 -->
+      <view class="manager-info">
+        <view class="manager-header">
+          <view class="manager-name">
+            {{item.managerName}}
+            <text class="primary-badge" wx:if="{{item.nx_dm_is_primary == 1}}">主要</text>
+            <text class="disabled-badge" wx:if="{{item.nx_dm_enable == 0}}">已禁用</text>
+          </view>
+          <view class="manager-phone">{{item.managerPhone}}</view>
+        </view>
+        
+        <view class="notify-level">
+          <text class="label">通知级别：</text>
+          <text class="value" wx:if="{{item.nx_dm_is_primary == 1}}">所有级别</text>
+          <text class="value" wx:else>
+            {{item.roleDesc}}
+          </text>
+        </view>
+        
+        <view class="bind-time">绑定时间：{{item.nx_dm_create_time}}</view>
+      </view>
+
+      <!-- 操作按钮 -->
+      <view class="manager-actions">
+        <button class="btn-edit" size="mini" bindtap="onEdit" data-item="{{item}}">
+          编辑
+        </button>
+        <button class="btn-toggle" size="mini" 
+                bindtap="onToggleEnable" 
+                data-id="{{item.nx_dm_id}}"
+                data-enable="{{item.nx_dm_enable}}">
+          {{item.nx_dm_enable == 1 ? '禁用' : '启用'}}
+        </button>
+        <button class="btn-delete" size="mini" 
+                bindtap="onDelete" 
+                data-id="{{item.nx_dm_id}}"
+                data-name="{{item.managerName}}">
+          删除
+        </button>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{managerList.length == 0}}">
+      <text class="empty-text">📋</text>
+      <text class="empty-text">暂无责任人</text>
+      <text class="empty-hint">请添加至少一位设备责任人</text>
+    </view>
+  </view>
+
+  <!-- 底部添加按钮 -->
+  <view class="footer-actions">
+    <button class="btn-add" bindtap="onAdd">+ 添加责任人</button>
+  </view>
+</view>
+
+<!-- 编辑责任人弹窗 -->
+<view class="modal-mask" wx:if="{{showEditModal}}" bindtap="onCloseModal">
+  <view class="modal-dialog" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text>{{editMode == 'add' ? '添加责任人' : '编辑责任人'}}</text>
+      <text class="modal-close" bindtap="onCloseModal">✕</text>
+    </view>
+    
+    <view class="modal-body">
+      <!-- 选择用户（仅添加时显示） -->
+      <view class="form-item" wx:if="{{editMode == 'add'}}">
+        <view class="form-label">选择用户</view>
+        
+        <picker mode="selector" 
+                range="{{availableManagers}}" 
+                range-key="nxMmName"
+                bindchange="onManagerChange"
+                value="{{selectedManagerIndex}}">
+          <view class="picker">
+            {{selectedManagerIndex >= 0 ? availableManagers[selectedManagerIndex].nxMmName : '请选择用户'}}
+          </view>
+        </picker>
+        <view class="form-hint" wx:if="{{selectedManagerIndex >= 0}}">
+          手机号：{{availableManagers[selectedManagerIndex].phone || '未绑定'}}
+        </view>
+      </view>
+
+      <!-- 管理员信息（仅编辑时显示） -->
+      <view class="form-item" wx:if="{{editMode == 'edit'}}">
+        <view class="form-label">管理员</view>
+        <view class="form-value">{{currentEdit.managerName}}</view>
+      </view>
+
+      <!-- 是否主要责任人 -->
+      <view class="form-item">
+        <view class="form-label">主要责任人</view>
+        <switch checked="{{currentEdit.nxDmIsPrimary == 1}}" 
+                bindchange="onPrimaryChange" 
+                color="#07c160"/>
+        <view class="form-hint">主要责任人接收所有级别的通知</view>
+      </view>
+
+      <!-- 通知级别（非主要责任人时显示） -->
+      <view class="form-item" wx:if="{{currentEdit.nxDmIsPrimary != 1}}">
+        <view class="form-label">通知级别</view>
+        <picker mode="selector" 
+                range="{{notifyLevels}}" 
+                range-key="label"
+                bindchange="onLevelChange"
+                value="{{currentEdit.nxDmNotifyLevel - 1}}">
+          <view class="picker">
+            {{notifyLevels[currentEdit.nxDmNotifyLevel - 1].label}}
+          </view>
+        </picker>
+        <view class="form-hint">只接收该级别及以上的通知</view>
+      </view>
+    </view>
+    
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="onCloseModal">取消</button>
+      <button class="btn-confirm" bindtap="onConfirm">确定</button>
+    </view>
+  </view>
+</view>

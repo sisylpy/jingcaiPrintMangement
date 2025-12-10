@@ -1,0 +1,32 @@
+<!--pages/device-management/device-management.wxml-->
+<view class="container p-20">
+  <!-- 添加设备按钮 -->
+  <view class="add-device-btn" bindtap="goToAddDevice">
+    <text class="font-md text-white">+ 添加设备</text>
+  </view>
+
+  <!-- 设备列表 -->
+  <view wx:if="{{deviceList.length > 0}}">
+    <view class="card p-20 mt-10 mb-10" wx:for="{{deviceList}}" wx:key="nxPdId">
+      <view class="flex-column ">
+        <view class="flex-1">
+          <text class="font-lg font-bold text-primary mb-10">{{item.nxPdDeviceName || '未命名设备'}}</text>
+          <text class="font-sm text-secondary">{{item.nxPdLocation || '未设置位置'}}</text>
+        </view>
+        <view class="flex-row p-20">
+          <button class="btn-edit" size="mini" bindtap="editDevice" data-id="{{item.nxPdId}}" data-item="{{item}}">编辑</button>
+          <button class="btn-delete" size="mini" bindtap="deleteDevice" data-id="{{item.nxPdId}}" data-item="{{item}}">删除</button>
+          <button class="btn-add" size="mini" bindtap="addManagerUser" data-id="{{item.nxPdId}}" data-item="{{item}}">设备管理人员</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="flex-column-center" style="padding: 100rpx 0;">
+    <text class="font-xl mb-20">📱</text>
+    <text class="font-sm text-tertiary">暂无设备</text>
+  </view>
+</view>
+
+

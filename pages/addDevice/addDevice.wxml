@@ -1,0 +1,139 @@
+<!--pages/addDevice/addDevice.wxml-->
+
+<view class="container p-20">
+  <!-- 自定义导航栏 -->
+  <back-navbar 
+    style="height: {{navBarHeight}}rpx;" 
+    title="{{mode === 'edit' ? '编辑设备' : '添加新设备'}}" 
+    bind:navbuttontap="onNavButtonTap"
+  />
+  
+  <view class="p-30" style="margin-top: {{navBarHeight + 20}}rpx;">
+    
+    <!-- 设备名称 -->
+    <view class="form-item">
+      <view class="font-md font-bold text-secondary mb-15">
+        <text class="text-danger">*</text> 设备名称
+      </view>
+      <input 
+        class="form-input" 
+        type="text" 
+        placeholder="请输入设备名称（如：4号打印机）" 
+        value="{{deviceName}}"
+        bindinput="onDeviceNameInput"
+        maxlength="50"
+      />
+    </view>
+
+    <!-- 设备型号 -->
+    <view class="form-item">
+      <view class="font-md font-bold text-secondary mb-15">设备型号</view>
+      <input 
+        class="form-input" 
+        type="text" 
+        placeholder="请输入设备型号" 
+        value="{{model}}"
+        bindinput="onModelInput"
+        maxlength="50"
+      />
+    </view>
+
+    <!-- 纸张类型 -->
+    <view class="form-item">
+      <view class="font-md font-bold text-secondary mb-15">纸张类型</view>
+      <radio-group class="radio-group" bindchange="onPaperTypeChange">
+        <label class="radio" wx:for="{{paperTypeOptions}}" wx:key="value">
+          <radio value="{{item.value}}" checked="{{paperType === item.value}}"/>
+          {{item.label}}
+        </label>
+      </radio-group>
+    </view>
+
+    <!-- 设备位置 -->
+    <view class="form-item">
+      <view class="font-md font-bold text-secondary mb-15">设备位置</view>
+      <input 
+        class="form-input" 
+        type="text" 
+        placeholder="请输入设备位置（如：北区出口）" 
+        value="{{location}}"
+        bindinput="onLocationInput"
+        maxlength="100"
+      />
+    </view>
+
+    <!-- 初始纸张数量 -->
+    <view class="mb-30">
+      <view class="font-md font-bold text-secondary mb-15">
+        <text class="text-danger" wx:if="{{mode === 'add'}}">*</text> {{mode === 'edit' ? '当前纸张数量' : '初始纸张数量'}}（张）
+      </view>
+      <input 
+        class="form-input {{mode === 'edit' ? 'form-input-disabled' : ''}}" 
+        type="number" 
+        placeholder="请输入纸张数量" 
+        value="{{paperCount}}"
+        bindinput="onPaperCountInput"
+        disabled="{{mode === 'edit'}}"
+      />
+      <view class="font-xs text-tertiary mt-10">
+        💡 {{mode === 'edit' ? '当前设备中的纸张数量（不可修改，请通过加纸功能调整）' : '设备安装时实际装入的纸张数量'}}
+      </view>
+    </view>
+
+    <!-- 最大容量 -->
+    <view class="mb-30">
+      <view class="font-md font-bold text-secondary mb-15">
+        <text class="text-danger" wx:if="{{mode === 'add'}}">*</text> 最大容量（张）
+      </view>
+      <input 
+        class="form-input" 
+        type="number" 
+        placeholder="请输入最大容量" 
+        value="{{paperMax}}"
+        bindinput="onPaperMaxInput"
+      />
+      <view class="font-xs text-tertiary mt-10">💡 设备满载时能装入的最大纸张数量</view>
+    </view>
+
+    <!-- 打印单据价格 -->
+    <view class="mb-30">
+      <view class="font-md font-bold text-secondary mb-15"><text class="text-danger mr-10">*</text>打印单据价格（元/张）</view>
+      <input 
+        class="form-input" 
+        type="digit" 
+        placeholder="请输入打印价格，如：0.24" 
+        value="{{printPrice}}"
+        bindinput="onPrintPriceInput"
+      />
+      <view class="font-xs text-tertiary mt-10">💡 每张单据的打印费用，用于成本统计</view>
+    </view>
+
+    <!-- 提示信息 -->
+    <view class="bg-light p-20 radius-10 mb-30" wx:if="{{mode === 'add'}}">
+      <view class="font-md font-bold text-primary mb-15">📌 提示</view>
+      <view class="font-xs text-secondary mb-5">• 设备编号会自动生成</view>
+      <view class="font-xs text-secondary mb-5">• 自动初始化4个级别的提醒阈值</view>
+      <view class="font-xs text-secondary mb-5">• 默认状态为"正常"</view>
+    </view>
+
+    <!-- 编辑模式提示 -->
+    <view class="bg-light p-20 radius-10 mb-30" wx:if="{{mode === 'edit'}}">
+      <view class="font-md font-bold text-primary mb-15">📌 编辑说明</view>
+      <view class="font-xs text-secondary mb-5">• 可以修改设备名称、型号、纸张类型、位置等信息</view>
+      <view class="font-xs text-secondary mb-5">• 当前纸张数量不可修改，请通过加纸功能调整</view>
+      <view class="font-xs text-secondary mb-5">• 修改后将立即生效</view>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button 
+      class="btn btn-primary radius-20 mt-20" 
+      style="width: 300rpx; padding: 20rpx; font-size: 36rpx;"
+      bindtap="submitAdd"
+      loading="{{loading}}"
+      disabled="{{loading}}"
+    >
+      {{mode === 'edit' ? '确认修改' : '确认添加'}}
+    </button>
+  </view>
+</view>
+

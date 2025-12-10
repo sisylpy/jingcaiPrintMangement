@@ -1,0 +1,107 @@
+<view class='flex-column'>
+
+
+
+  <view class='flex-column p-20' >
+
+    <view class="flex-column center-content">
+    <view class='word'>市场管理员</view>
+    <view class="small gray" style="margin-bottom: 40rpx;">打印机管理系统</view>
+  </view>
+
+    <view class="flex-column">
+     
+     
+      <view class="flex-row mb-20" style="width: {{windowWidth - 40}}rpx; ">
+        <text class="mr-10" style="width: 220rpx; text-align: right;">所在市场:</text>
+        <view class='what' style="width: {{windowWidth - 280}}rpx;">
+          <input wx:if="{{!isFromShare}}" class='input middle' type='text' placeholder='请选择市场' name='marketName' value='{{marketName}}' bindtap='showMarket' disabled="false"></input>
+          <input wx:else class='input middle' type='text' name='marketName' value='{{marketName}}' disabled="true" style="background-color: #f5f5f5;"></input>
+        </view>
+      </view>
+
+      <view class="flex-row mb-20" style="width: {{windowWidth - 40}}rpx; ">
+        <text class="mr-10" style="width: 220rpx; text-align: right;">管理员姓名:</text>
+        <view class='what' style="width: {{windowWidth - 280}}rpx;">
+          <input class='input middle' type='text' placeholder='请输入真实姓名' name='managerName' value='{{managerName}}' bindblur='getManagerName' bindconfirm="_canLogin"></input>
+        </view>
+      </view>
+
+
+
+      <view class="flex-row" style="width: {{windowWidth - 40}}rpx; ">
+        <text class="mr-10" style="width: 220rpx;text-align: right;">联系手机:</text>
+        <view class='what' style="width: {{windowWidth - 280}}rpx;">
+          <input class='inputHalf middle' type='number' placeholder='手机号码' name='phone' value='{{phone}}' bindblur="getPhone" bindconfirm="_canLogin"></input>
+        </view>
+      </view>
+
+      <view class="flex-row" style="width: {{windowWidth - 40}}rpx; margin-top: 20rpx;">
+        <text class="mr-10" style="width: 220rpx;text-align: right;">角色类型:</text>
+        <view class='role-picker-container' style="width: {{windowWidth - 280}}rpx;">
+          <picker mode="selector" range="{{roleOptions}}" range-key="label" value="{{role-1}}" bindchange="onRoleChange">
+            <view class="role-picker">
+              <text class="role-text">{{roleOptions[role-1].label}}</text>
+              <text class="role-arrow">▼</text>
+            </view>
+          </picker>
+        </view>
+      </view>
+    </view>
+
+<!-- 预览已选头像(若有) -->
+<view wx:if="{{avatarUrl}}" class="avatar-preview-wrap">
+    <text class="avatar-preview-label">已选头像预览：</text>
+    <image 
+      src="{{avatarUrl}}" 
+      class="avatar-preview" 
+    />
+  </view>
+    
+    <!-- 头像选择按钮 -->
+    <view wx:if="{{canLogin && !avatarUrl}}" class='reg-btn-container'>
+      <button class="reg-btn primary" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+        📷 选择头像并注册
+      </button>
+    </view>
+    
+    <!-- 注册按钮 -->
+    <view wx:if="{{canLogin && avatarUrl}}" class='reg-btn-container'>
+      <button class="reg-btn success" bindtap="_register">
+        ✅ 注册市场管理员
+      </button>
+    </view>
+    
+    <!-- 条件不满足时的提示按钮 -->
+    <view wx:if="{{!canLogin}}" class='reg-btn-container'>
+      <button class="reg-btn disabled" bindtap="tishi">
+        ⚠️ 注册市场管理员
+      </button>
+    </view>
+    
+   
+  </view>
+</view>
+
+
+<view class="overlay {{showMarket ? 'show' : 'hide'}}">
+  <view class='popup' >
+    <!-- 标题栏 -->
+    <view class='flex-row-between p-30'>
+      <text class='font-lg text-primary'>请选择所在市场</text>
+      <view class='button-container' bindtap="closeMarket">
+        <image src="/images/del.png" class="icon"></image>
+      </view>
+    </view>
+    
+    <!-- 滚动内容区域 -->
+    <scroll-view class='flex-column' scroll-y="true" style="max-height: 60vh;">
+      <radio-group class="p-30" bindchange="radioChangeMarket">
+        <label class="flex-row  p-20" wx:for="{{itemsMarket}}" wx:key="value" style="border-bottom: 1px solid #f5f5f5;">
+          <radio value="{{index}}" data-name="{{item.sysCmMarketName}}" checked="{{item.sysCityMarketId == marketId}}" />
+          <text class="ml-20 font-md text-primary">{{item.sysCmMarketName}}</text>
+        </label>
+      </radio-group>
+    </scroll-view>
+  </view>
+</view>
