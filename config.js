@@ -1,5 +1,7 @@
 
 module.exports = {
+   // 农贸市场V1仅连接测试环境；不得改为生产地址后直接发布。
+   marketplaceApiUrl: "https://test-api.grainservice.club/nongxinle/api/",
    
    apiUrl: "https://grainservice.club:8443/nongxinle/api/",
    server: "https://grainservice.club:8443/nongxinle/",

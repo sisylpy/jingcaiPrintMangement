@@ -1,5 +1,9 @@
 {
   "pages": [
+    "pages/roleEntry/roleEntry",
+    "pages/marketplaceMerchantLogin/marketplaceMerchantLogin",
+    "pages/marketplaceMerchantOrders/marketplaceMerchantOrders",
+    "pages/marketplaceMerchantOrder/marketplaceMerchantOrder",
     "pages/index/index",
     "pages/device/device",
     "pages/refill/refill",
@@ -30,7 +34,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#0ba17c",
-    "navigationBarTitleText": "耗材提醒",
+    "navigationBarTitleText": "市场与档口工作台",
     "navigationBarTextStyle": "white"
   },
   "tabBar": {
@@ -63,4 +67,3 @@
     "startLocationUpdateBackground"
   ]
 }
-
